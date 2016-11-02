@@ -14,6 +14,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        String path = Environment.getDownloadCacheDirectory().getAbsolutePath();
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
         String folder = path + "/myLoveDir";
         String fileName = folder + "/myFile.txt";
 
@@ -43,13 +47,37 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button2: // 폴더 삭제
                 myFolder.delete();
                 Toast.makeText(getApplicationContext(), "폴더 삭제", Toast.LENGTH_SHORT).show();
-
                 break;
             case R.id.button3: // 파일 생성
-
+                try {
+                    FileOutputStream fos = new FileOutputStream(fileName);
+                    String str = "Hello";
+                    fos.write(str.getBytes());
+                    fos.close();
+                    Toast.makeText(getApplicationContext(), "파일 생성", Toast.LENGTH_SHORT).show();
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(getApplicationContext(), "파일 생성 에러", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Toast.makeText(getApplicationContext(), "파일 쓰기 에러", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
                 break;
             case R.id.button4: // 파일 읽기
+                try {
+                    FileInputStream fis = new FileInputStream(fileName);
+                    byte[] arr = new byte[fis.available()];
+                    fis.read(arr);
+                    fis.close();
 
+                    Toast.makeText(getApplicationContext(), new String(arr), Toast.LENGTH_SHORT).show();
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(getApplicationContext(), "파일 없음", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Toast.makeText(getApplicationContext(), "파일 없음", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
                 break;
             case R.id.button5: // 파일 목록 가져오기
 
