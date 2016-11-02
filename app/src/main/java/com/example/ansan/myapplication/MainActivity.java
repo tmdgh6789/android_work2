@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
         File myFolder = new File(folder);
 
         switch (v.getId()) {
-            case R.id.button: // 폴더 삭제
+            case R.id.button: // 폴더 생성
                 myFolder.mkdir();
                 Toast.makeText(getApplicationContext(), "폴더 생성", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.button2: // 폴더 생성
+            case R.id.button2: // 폴더 삭제
 
                 break;
             case R.id.button3: // 파일 생성
